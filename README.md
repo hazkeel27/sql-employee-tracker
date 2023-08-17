@@ -9,6 +9,6 @@ Create a separate file which returns inquirer questions
 
 Create a main index.js file which includes a while loop and incorporates inquirer file and child classes
 
-create schema.sql and seeds.sql
+create schema.sql and seeds.sql DONE
 
 Create test files for all js files
