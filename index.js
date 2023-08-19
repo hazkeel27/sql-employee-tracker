@@ -25,7 +25,7 @@ const employee = new Employee(db);
 const askQuestions = async () => {
     while (true) {
         try {
-            const data = await cli();
+            const data = await cli.mainCli();
             let tableData;
 
             switch (data.choice) {
@@ -33,6 +33,8 @@ const askQuestions = async () => {
                     tableData = await department.view();
                     break;
                 case 'Add Department':
+                    const newDepData = await cli.depCli();
+                    tableData = await department.enter(newDepData.newDep.trim());
                     break;
                 case 'View All Roles':
                     tableData = await role.view();
@@ -48,7 +50,7 @@ const askQuestions = async () => {
                     break;
                 case 'Quit':
                     console.log('Goodbye!');
-                    return; // Exit the loop and the function
+                    return;
                 default:
                     console.log('Invalid choice. Please select a valid option.');
             }
