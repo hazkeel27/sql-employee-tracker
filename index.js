@@ -34,12 +34,18 @@ const askQuestions = async () => {
                     break;
                 case 'Add Department':
                     const newDepData = await cli.depCli();
-                    tableData = await department.enter(newDepData.newDep.trim());
+                    tableData = await department.enter(newDepData.newDep);
                     break;
                 case 'View All Roles':
                     tableData = await role.view();
                     break;
                 case 'Add Role':
+                    const getDep = await role.getDepartments();
+                    try { 
+                        const newRolData = await cli.rolCli(getDep); 
+                        tableData = await role.enter(newRolData.newRol, newRolData.newRolSal, newRolData.newRolDep);
+                    } 
+                    catch (error) { console.error(`Error Getting Departments: ${error}`); }
                     break;
                 case 'View All Employees':
                     tableData = await employee.view();
