@@ -66,8 +66,8 @@ const askQuestions = async () => {
                     break;
                 case 'Update Employee Role':
                     try { 
-                        const updateEmpData = await cli.empUpdateCli(getEmployees, getRoles); 
-                        tableData = await employee.update(updateEmpData.updateEmployee, updateEmpData.newRole);
+                        const updateEmpRole = await cli.empRolCli(getEmployees, getRoles); 
+                        tableData = await employee.updateRole(updateEmpRole.updateEmployee, updateEmpRole.newRole);
                     } 
                     catch (error) { 
                         console.error(`Error Updating Employee: ${error}`);
