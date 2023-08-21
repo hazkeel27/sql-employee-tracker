@@ -33,18 +33,32 @@ const askQuestions = async () => {
 
             switch (data.choice) {
                 case 'View All Departments':
-                    tableData = await department.view();
+                    try {
+                        tableData = await department.view();
+                        console.table(tableData);
+                    } catch (error) {
+                        console.error(`Error Viewing Departments: ${error}`);
+                    }
                     break;
                 case 'Add Department':
-                    const newDepData = await cli.depCli();
-                    tableData = await department.enter(newDepData.department);
+                    try {
+                        const newDepData = await cli.depCli();
+                        await department.enter(newDepData.department);
+                    } catch (error) {
+                        console.error(`Error Adding Department: ${error}`);
+                    }
                     break;
                 case 'View All Roles':
-                    tableData = await role.view();
+                    try {
+                        tableData = await role.view();
+                        console.table(tableData);
+                    } catch (error) {
+                        console.error(`Error Viewing Roles: ${error}`);
+                    }
                     break;
                 case 'Add Role':
-                    const getDepartments = await department.getDepartments();
                     try { 
+                        const getDepartments = await department.getDepartments();
                         const newRolData = await cli.rolCli(getDepartments); 
                         tableData = await role.enter(newRolData.role, newRolData.salary, newRolData.department);
                     } 
@@ -53,7 +67,12 @@ const askQuestions = async () => {
                     }
                     break;
                 case 'View All Employees':
-                    tableData = await employee.view();
+                    try {
+                        tableData = await employee.view();
+                        console.table(tableData);
+                    } catch (error) {
+                        console.error(`Error Viewing Employees: ${error}`);
+                    }
                     break;
                 case 'Add Employee':
                     try { 
@@ -70,7 +89,7 @@ const askQuestions = async () => {
                         tableData = await employee.updateRole(updateEmpRole.updateEmployee, updateEmpRole.newRole);
                     } 
                     catch (error) { 
-                        console.error(`Error Updating Employee: ${error}`);
+                        console.error(`Error Updating Employee Role: ${error}`);
                     }
                     break;
                 case 'Update Employee Manager':
@@ -79,7 +98,7 @@ const askQuestions = async () => {
                         await employee.updateManager(updateEmpManager.updateEmployee, updateEmpManager.newManager);
                     } 
                     catch (error) { 
-                        console.error(`Error Updating Employee: ${error}`);
+                        console.error(`Error Updating Employee Manager: ${error}`);
                     }
                     break;
                 case 'Quit':
@@ -88,14 +107,8 @@ const askQuestions = async () => {
                 default:
                     console.log('Invalid choice. Please select a valid option.');
             }
-
-            try {
-                console.table(`Table Data:\n${tableData}`);
-            } catch (error) {
-                console.error(`Error Vewing Table Data: ${error}`);
-            }
-
-        } catch (error) {
+        } 
+        catch (error) {
             console.error(`CLI Error: ${error}`);
         }
     }
