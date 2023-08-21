@@ -73,6 +73,15 @@ const askQuestions = async () => {
                         console.error(`Error Updating Employee: ${error}`);
                     }
                     break;
+                case 'Update Employee Manager':
+                    try { 
+                        const updateEmpManager = await cli.empManCli(getEmployees, getEmployees); 
+                        await employee.updateManager(updateEmpManager.updateEmployee, updateEmpManager.newManager);
+                    } 
+                    catch (error) { 
+                        console.error(`Error Updating Employee: ${error}`);
+                    }
+                    break;
                 case 'Quit':
                     console.log('Goodbye!');
                     return;
@@ -81,7 +90,7 @@ const askQuestions = async () => {
             }
 
             try {
-                console.table(tableData);
+                console.table(`Table Data:\n${tableData}`);
             } catch (error) {
                 console.error(`Error Vewing Table Data: ${error}`);
             }
