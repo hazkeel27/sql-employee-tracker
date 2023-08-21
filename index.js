@@ -101,6 +101,15 @@ const askQuestions = async () => {
                         console.error(`Error Updating Employee Manager: ${error}`);
                     }
                     break;
+                case 'View Employees By Manager':
+                    try {
+                        const chosenManager = await cli.empByManagerCli(getEmployees); 
+                        tableData = await employee.viewEmpByManager(chosenManager.manager);
+                        console.table(tableData);
+                    } catch (error) {
+                        console.error(`Error Viewing ${chosenManager}'s Employees: ${error}`);
+                    }
+                    break;
                 case 'Quit':
                     console.log('Goodbye!');
                     return;
