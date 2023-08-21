@@ -34,23 +34,34 @@ const askQuestions = async () => {
                     break;
                 case 'Add Department':
                     const newDepData = await cli.depCli();
-                    tableData = await department.enter(newDepData.newDep);
+                    tableData = await department.enter(newDepData.department);
                     break;
                 case 'View All Roles':
                     tableData = await role.view();
                     break;
                 case 'Add Role':
-                    const getDep = await role.getDepartments();
+                    const getDepartments = await department.getDepartments();
                     try { 
-                        const newRolData = await cli.rolCli(getDep); 
-                        tableData = await role.enter(newRolData.newRol, newRolData.newRolSal, newRolData.newRolDep);
+                        const newRolData = await cli.rolCli(getDepartments); 
+                        tableData = await role.enter(newRolData.role, newRolData.salary, newRolData.department);
                     } 
-                    catch (error) { console.error(`Error Getting Departments: ${error}`); }
+                    catch (error) { 
+                        console.error(`Error Adding Role: ${error}`);
+                    }
                     break;
                 case 'View All Employees':
                     tableData = await employee.view();
                     break;
                 case 'Add Employee':
+                    const getRoles = await role.getRoles();
+                    const getManagers = await employee.getManagers();
+                    try { 
+                        const newEmpData = await cli.empCli(getRoles, getManagers); 
+                        tableData = await employee.enter(newEmpData.firstname, newEmpData.lastname, newEmpData.role, newEmpData.manager);
+                    } 
+                    catch (error) { 
+                        console.error(`Error Adding Employee: ${error}`);
+                    }
                     break;
                 case 'Update Employee Role':
                     break;
