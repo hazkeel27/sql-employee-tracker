@@ -26,6 +26,9 @@ const askQuestions = async () => {
     while (true) {
         try {
             const data = await cli.mainCli();
+            const getRoles = await role.getRoles();
+            const getEmployees = await employee.getEmployees();
+
             let tableData;
 
             switch (data.choice) {
@@ -53,10 +56,8 @@ const askQuestions = async () => {
                     tableData = await employee.view();
                     break;
                 case 'Add Employee':
-                    const getRoles = await role.getRoles();
-                    const getManagers = await employee.getManagers();
                     try { 
-                        const newEmpData = await cli.empCli(getRoles, getManagers); 
+                        const newEmpData = await cli.empCli(getRoles, getEmployees); 
                         tableData = await employee.enter(newEmpData.firstname, newEmpData.lastname, newEmpData.role, newEmpData.manager);
                     } 
                     catch (error) { 
@@ -64,6 +65,13 @@ const askQuestions = async () => {
                     }
                     break;
                 case 'Update Employee Role':
+                    try { 
+                        const updateEmpData = await cli.empUpdateCli(getEmployees, getRoles); 
+                        tableData = await employee.update(updateEmpData.updateEmployee, updateEmpData.newRole);
+                    } 
+                    catch (error) { 
+                        console.error(`Error Updating Employee: ${error}`);
+                    }
                     break;
                 case 'Quit':
                     console.log('Goodbye!');
@@ -75,7 +83,7 @@ const askQuestions = async () => {
             try {
                 console.table(tableData);
             } catch (error) {
-                console.error('An error occurred:', error);
+                console.error(`Error Vewing Table Data: ${error}`);
             }
 
         } catch (error) {
