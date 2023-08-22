@@ -44,10 +44,6 @@ npm install mysql2@2.2.5
 - Install mysql2 dependency to create a connection with the MySQL database.
 - Install dotenv dependency to use environment variables and secure your database password.
 
-Following is the screenshot of the terminal. 📷
-
-![terminal screenshot](./images/terminal-screenshot.png)
-
 Following is a video demonstrating how to run the application in the terminal. 🎥
 
 [![Video Demo](./images/terminal-screenshot.png)](https://drive.google.com/file/d/1_1BuaXizdWtK82mw7pH_hvq-EYYwkUdI/view?usp=sharing)
