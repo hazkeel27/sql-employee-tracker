@@ -50,7 +50,7 @@ Following is the screenshot of the terminal. 📷
 
 Following is a video demonstrating how to run the application in the terminal. 🎥
 
-[![Video Demo](https://drive.google.com/file/d/1_1BuaXizdWtK82mw7pH_hvq-EYYwkUdI/view?usp=sharing)](https://drive.google.com/file/d/1_1BuaXizdWtK82mw7pH_hvq-EYYwkUdI/view?usp=sharing)
+[![Video Demo](./images/terminal-screenshot.png)](https://drive.google.com/file/d/1_1BuaXizdWtK82mw7pH_hvq-EYYwkUdI/view?usp=sharing)
 
 ## <a name="contributing"></a>Contribution 🤝
 
