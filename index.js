@@ -180,6 +180,16 @@ const askQuestions = async () => {
                     }
                     break;
 
+                case 'View Department Budget':
+                    try {
+                        tableData = await department.depBudget();
+                        console.table(tableData);
+                    } 
+                    catch (error) {
+                        console.error(`Error View ${viewDepBudget.department}'s Total Utilized Budget: ${error}`);
+                    }
+                    break;
+
                 case 'Quit':
                     console.log('Goodbye!');
                     return;
