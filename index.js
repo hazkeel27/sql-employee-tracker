@@ -44,7 +44,8 @@ const askQuestions = async () => {
                     try {
                         tableData = await department.view();
                         console.table(tableData);
-                    } catch (error) {
+                    } 
+                    catch (error) {
                         console.error(`Error Viewing Departments: ${error}`);
                     }
                     break;
@@ -52,8 +53,10 @@ const askQuestions = async () => {
                 case 'Add Department':
                     try {
                         const newDepData = await cli.depCli();
-                        await department.enter(newDepData.department);
-                    } catch (error) {
+                        const result = await department.enter(newDepData.department);
+                        console.info(result);
+                    } 
+                    catch (error) {
                         console.error(`Error Adding Department: ${error}`);
                     }
                     break;
@@ -62,7 +65,8 @@ const askQuestions = async () => {
                     try {
                         tableData = await role.view();
                         console.table(tableData);
-                    } catch (error) {
+                    } 
+                    catch (error) {
                         console.error(`Error Viewing Roles: ${error}`);
                     }
                     break;
@@ -70,7 +74,8 @@ const askQuestions = async () => {
                 case 'Add Role':
                     try { 
                         const newRolData = await cli.rolCli(getDepartments); 
-                        tableData = await role.enter(newRolData.role, newRolData.salary, newRolData.department);
+                        const result = await role.enter(newRolData.role, newRolData.salary, newRolData.department);
+                        console.info(result);
                     } 
                     catch (error) { 
                         console.error(`Error Adding Role: ${error}`);
@@ -81,7 +86,8 @@ const askQuestions = async () => {
                     try {
                         tableData = await employee.view();
                         console.table(tableData);
-                    } catch (error) {
+                    } 
+                    catch (error) {
                         console.error(`Error Viewing Employees: ${error}`);
                     }
                     break;
@@ -89,7 +95,8 @@ const askQuestions = async () => {
                 case 'Add Employee':
                     try { 
                         const newEmpData = await cli.empCli(getRoles, getEmployees); 
-                        tableData = await employee.enter(newEmpData.firstname, newEmpData.lastname, newEmpData.role, newEmpData.manager);
+                        const result = await employee.enter(newEmpData.firstname, newEmpData.lastname, newEmpData.role, newEmpData.manager);
+                        console.info(result);
                     } 
                     catch (error) { 
                         console.error(`Error Adding Employee: ${error}`);
@@ -99,7 +106,8 @@ const askQuestions = async () => {
                 case 'Update Employee Role':
                     try { 
                         const updateEmpRole = await cli.empRolCli(getEmployees, getRoles); 
-                        tableData = await employee.updateRole(updateEmpRole.updateEmployee, updateEmpRole.newRole);
+                        const result = await employee.updateRole(updateEmpRole.updateEmployee, updateEmpRole.newRole);
+                        console.info(result);
                     } 
                     catch (error) { 
                         console.error(`Error Updating Employee Role: ${error}`);
@@ -109,7 +117,8 @@ const askQuestions = async () => {
                 case 'Update Employee Manager':
                     try { 
                         const updateEmpManager = await cli.empManCli(getEmployees, getEmployees); 
-                        await employee.updateManager(updateEmpManager.updateEmployee, updateEmpManager.newManager);
+                        result = await employee.updateManager(updateEmpManager.updateEmployee, updateEmpManager.newManager);
+                        console.info(result);
                     } 
                     catch (error) { 
                         console.error(`Error Updating Employee Manager: ${error}`);
@@ -121,7 +130,8 @@ const askQuestions = async () => {
                         const chosenManager = await cli.empByManagerCli(getEmployees); 
                         tableData = await employee.viewEmpByManager(chosenManager.manager);
                         console.table(tableData);
-                    } catch (error) {
+                    } 
+                    catch (error) {
                         console.error(`Error Viewing ${chosenManager.manager}'s Employees: ${error}`);
                     }
                     break;
@@ -131,8 +141,31 @@ const askQuestions = async () => {
                         const chosenDepartment = await cli.empByDepartmentCli(getDepartments); 
                         tableData = await employee.viewEmpByDepartment(chosenDepartment.department);
                         console.table(tableData);
-                    } catch (error) {
+                    } 
+                    catch (error) {
                         console.error(`Error Viewing ${chosenDepartment.department}'s Employees: ${error}`);
+                    }
+                    break;
+
+                case 'Delete Department':
+                    try {
+                        const deleteDepartment = await cli.delDepCli(getDepartments); 
+                        const result = await department.delete(deleteDepartment.department);
+                        console.info(result);
+                    } 
+                    catch (error) {
+                        console.error(`Error Deleting ${deleteDepartment.department}: ${error}`);
+                    }
+                    break;
+
+                case 'Delete Role':
+                    try {
+                        const deleteRole = await cli.delRolCli(getRoles); 
+                        const result = await role.delete(deleteRole.role);
+                        console.info(result);
+                    } 
+                    catch (error) {
+                        console.error(`Error Deleting ${deleteRole.role}: ${error}`);
                     }
                     break;
 
@@ -141,8 +174,9 @@ const askQuestions = async () => {
                         const deleteEmployee = await cli.delEmpCli(getEmployees); 
                         const result = await employee.delete(deleteEmployee.employee);
                         console.info(result);
-                    } catch (error) {
-                        console.error(`Error Deleting ${deleteEmployee}: ${error}`);
+                    } 
+                    catch (error) {
+                        console.error(`Error Deleting ${deleteEmployee.employee}: ${error}`);
                     }
                     break;
 
