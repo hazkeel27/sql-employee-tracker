@@ -136,6 +136,16 @@ const askQuestions = async () => {
                     }
                     break;
 
+                case 'Delete Employee':
+                    try {
+                        const deleteEmployee = await cli.delEmpCli(getEmployees); 
+                        const result = await employee.delete(deleteEmployee.employee);
+                        console.info(result);
+                    } catch (error) {
+                        console.error(`Error Deleting ${deleteEmployee}: ${error}`);
+                    }
+                    break;
+
                 case 'Quit':
                     console.log('Goodbye!');
                     return;
