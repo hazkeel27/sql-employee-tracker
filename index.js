@@ -27,6 +27,23 @@ const employee = new Employee(db);
 
 // switch statement for user to navigate the app
 const askQuestions = async () => {
+    console.log(`
+    ______  __  __ _____  _      ______     ________ ______ 
+    |  ____|  \\/  |  __ \\| |    / __ \\ \\   / /  ____|  ____|
+    | |__  | \\  / | |__) | |   | |  | \\ \\_/ /| |__  | |__   
+    |  __| | |\\/| |  ___/| |   | |  | |\\   / |  __| |  __|  
+    | |____| |  | | |    | |___| |__| | | |  | |____| |____ 
+    |______|_|  |_|_|    |______\\____/  |_|  |______|______|
+                                                            
+                                                            
+     __  __          _   _          _____ ______ _____      
+    |  \\/  |   /\\   | \\ | |   /\\   / ____|  ____|  __ \\     
+    | \\  / |  /  \\  |  \\| |  /  \\ | |  __| |__  | |__) |    
+    | |\\/| | / /\\ \\ | . ' | / /\\ \\| | |_ |  __| |  _  /     
+    | |  | |/ ____ \\| |\\  |/ ____ \\ |__| | |____| | \\ \\     
+    |_|  |_/_/    \\_\\_| \\_/_/    \\_\\_____|______|_|  \\_\\  
+    `);
+  
     // app runs forever untill user chooses 'Quit' option
     while (true) {
         try {
@@ -192,7 +209,8 @@ const askQuestions = async () => {
 
                 case 'Quit':
                     console.log('Goodbye!');
-                    return;
+                    // end the app
+                    process.exit();
 
                 default:
                     console.log('Invalid choice. Please select a valid option.');
