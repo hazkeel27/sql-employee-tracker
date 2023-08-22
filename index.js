@@ -2,6 +2,7 @@ const cli = require('./lib/cli');
 const Department = require('./lib/department');
 const Role = require('./lib/role');
 const Employee = require('./lib/employee');
+require('dotenv').config();
 
 const MySQL = require('mysql2');
 const { table } = require('console');
@@ -12,7 +13,7 @@ const db = MySQL.createConnection(
       // MySQL username,
       user: 'root',
       // MySQL password
-      password: '394377394377cR7&',
+      password: process.env.DB_PASSWORD,
       database: 'company_db'
     },
     console.log(`Connected to the company_db database.`)
@@ -28,6 +29,7 @@ const askQuestions = async () => {
             const data = await cli.mainCli();
             const getRoles = await role.getRoles();
             const getEmployees = await employee.getEmployees();
+            const getDepartments = await department.getDepartments();
 
             let tableData;
 
@@ -58,7 +60,6 @@ const askQuestions = async () => {
                     break;
                 case 'Add Role':
                     try { 
-                        const getDepartments = await department.getDepartments();
                         const newRolData = await cli.rolCli(getDepartments); 
                         tableData = await role.enter(newRolData.role, newRolData.salary, newRolData.department);
                     } 
@@ -107,7 +108,16 @@ const askQuestions = async () => {
                         tableData = await employee.viewEmpByManager(chosenManager.manager);
                         console.table(tableData);
                     } catch (error) {
-                        console.error(`Error Viewing ${chosenManager}'s Employees: ${error}`);
+                        console.error(`Error Viewing ${chosenManager.manager}'s Employees: ${error}`);
+                    }
+                    break;
+                case 'View Employees By Department':
+                    try {
+                        const chosenDepartment = await cli.empByDepartmentCli(getDepartments); 
+                        tableData = await employee.viewEmpByDepartment(chosenDepartment.department);
+                        console.table(tableData);
+                    } catch (error) {
+                        console.error(`Error Viewing ${chosenDepartment.department}'s Employees: ${error}`);
                     }
                     break;
                 case 'Quit':
